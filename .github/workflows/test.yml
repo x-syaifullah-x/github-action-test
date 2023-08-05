@@ -1,0 +1,42 @@
+name: Running
+
+on:
+  push:
+    branches: [ main ]
+#  pull_request:
+#    branches: [ master ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      JAVA_HOME: ${{ github.workspace }}/JBR
+      FLUTTER_ROOT: ${{ github.workspace }}/flutter
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: DD
+        run: |
+          free -mwt
+          mkdir aa && sudo mount -t tmpfs -o size=100% tmpfs aa && cd aa && dd if=/dev/zero of=a.img oflag=dsync bs=4096 count=1000000 && dd if=a.img of=/dev/zero oflag=dsync bs=4096
+
+      # - name: Setup java
+      #   run: |
+      #     wget https://cache-redirector.jetbrains.com/intellij-jbr/jbr_jcef-17.0.7-linux-x64-b1000.6.tar.gz 2>/dev/null
+      #     [ ! -d $JAVA_HOME ] && mkdir -p $JAVA_HOME
+      #     tar xzf jbr_jcef-17.0.7-linux-x64-b1000.6.tar.gz && rm -rf jbr_jcef-17.0.7-linux-x64-b1000.6.tar.gz
+      #     mv jbr_jcef-17.0.7-linux-x64-b1000.6/* $JAVA_HOME
+      #     echo $JAVA_HOME/bin >> $GITHUB_PATH
+
+      # - name: Setup flutter SDK
+      #   run: |
+      #     wget https://storage.googleapis.com/flutter_infra_release/releases/stable/linux/flutter_linux_3.10.6-stable.tar.xz 2>/dev/null
+      #     [ ! -d $FLUTTER_ROOT ] && mkdir -p $FLUTTER_ROOT
+      #     tar xf flutter_linux_3.10.6-stable.tar.xz && rm -rf flutter_linux_3.10.6-stable.tar.xz
+      #     echo $FLUTTER_ROOT/bin >> $GITHUB_PATH
+
+      # - name: Setup android studio
+      #   run: |
+      #     wget https://redirector.gvt1.com/edgedl/android/studio/ide-zips/2022.3.1.18/android-studio-2022.3.1.18-linux.tar.gz 2>/dev/null
+      #     du -m android-studio-2022.3.1.18-linux.tar.gz
